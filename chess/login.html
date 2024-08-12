@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="stylen.css" />
+    <style>
+        .login-btn {
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .login-btn.inactive {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <div class="login">Login</div>
+
+        <!-- Form added here -->
+        <form id="loginForm">
+            <div class="email">
+                <input type="text" id="username" name="username" placeholder="Email" />
+                <img src="user.png" width="23px" alt="User icon" />
+            </div>
+            <div class="password">
+                <input type="password" id="password" name="password" placeholder="Password" />
+                <img src="padlock.png" width="23px" alt="Padlock icon" />
+            </div>
+            <div id="passwordStrength"></div>
+            <button id="loginBtn" class="login-btn inactive" type="submit">Login</button>
+        </form>
+    </div>
+    <script>
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+        const passwordStrength = document.getElementById('passwordStrength');
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePassword(password) {
+            const minLength = 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            
+            return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar;
+        }
+
+        function updatePasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
+
+            const strengthText = ['Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+            const strengthColor = ['#ff4d4d', '#ffa64d', '#ffff4d', '#4dff4d', '#4d4dff'];
+
+            passwordStrength.textContent = `Password Strength: ${strengthText[strength - 1] || ''}`;
+            passwordStrength.style.color = strengthColor[strength - 1] || '';
+        }
+
+        function validateForm() {
+            const email = usernameInput.value.trim();
+            const password = passwordInput.value;
+            
+            const isValidEmail = validateEmail(email);
+            const isValidPassword = validatePassword(password);
+            
+            if (isValidEmail && isValidPassword) {
+                loginBtn.classList.remove('inactive');
+            } else {
+                loginBtn.classList.add('inactive');
+            }
+
+            updatePasswordStrength(password);
+        }
+
+        usernameInput.addEventListener('input', validateForm);
+        passwordInput.addEventListener('input', validateForm);
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            if (loginBtn.classList.contains('inactive')) {
+                event.preventDefault();
+                alert('Please enter a valid email and password.');
+                return;
+            }
+
+            event.preventDefault(); // Prevent the form from redirecting to a new page
+            
+            const data = {
+                username: usernameInput.value.trim(),
+                password: passwordInput.value,
+            };
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'Login successful') {
+                    window.location.href = 'index.html'; // Replace with your actual game site URL
+                } else {
+                    alert(data); // Show error message
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        // Initial form validation
+        validateForm();
+    </script>
+</body>
+</html>
