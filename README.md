@@ -10,6 +10,7 @@ A simple chess game built with [HTML](https://www.w3.org/TR/html52/), [CSS](http
 - Highlights valid moves.
 
 ## Getting Started
+![Screenshot 2024-09-10 154629](https://github.com/user-attachments/assets/2f86e002-3e5b-4123-80fc-378ec47018a6)
 
 ### Prerequisites
 
