@@ -11,6 +11,8 @@ A simple chess game built with [HTML](https://www.w3.org/TR/html52/), [CSS](http
 
 ## Getting Started
 ![Screenshot 2024-09-10 154629](https://github.com/user-attachments/assets/2f86e002-3e5b-4123-80fc-378ec47018a6)
+![Screenshot 2024-09-10 154719](https://github.com/user-attachments/assets/03bc6bb8-e7d5-4792-804c-8510f9d483c1)
+
 
 ### Prerequisites
 
