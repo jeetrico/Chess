@@ -22,12 +22,12 @@ No specific prerequisites are needed. Just a modern web browser.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/jeetrico/chess-game.git
+   git clone https://github.com/jeetrico/chess.git
    ```
 
 2. Navigate into the project directory:
    ```bash
-   cd chess-game
+   cd chess
    ```
 
 3. Open `index.html` in your web browser to start playing.
