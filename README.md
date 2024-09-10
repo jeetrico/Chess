@@ -22,7 +22,7 @@ No specific prerequisites are needed. Just a modern web browser.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/chess-game.git
+   git clone https://github.com/jeetrico/chess-game.git
    ```
 
 2. Navigate into the project directory:
